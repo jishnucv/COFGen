@@ -1,0 +1,29 @@
+model:
+  latent_dim:   256
+  hidden_dim:   256
+  n_layers:     6       # graph transformer layers
+  n_heads:      8
+  bb_layers:    2       # building-block transformer layers
+  dropout:      0.10
+  topo_embed_dim: 32
+  max_bbs:      32      # max building blocks per unit cell (pad limit)
+
+training:
+  epochs:       100
+  batch_size:   32
+  lr:           3.0e-4
+  weight_decay: 1.0e-4
+  kl_weight:    1.0e-3  # annealed to 1.0 over training
+  grad_clip:    1.0
+  n_workers:    4
+
+data:
+  processed_dir: data/processed/
+  split_file:    data/processed/splits.json
+  max_atoms:     500
+  cutoff:        5.0    # Å neighbour cutoff
+
+output:
+  checkpoint_dir: checkpoints/encoder/
+  log_every:      100   # steps
+  save_every:     10    # epochs

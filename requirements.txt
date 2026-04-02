@@ -1,0 +1,32 @@
+# COFGen requirements
+# ──────────────────────────────────────────────────────────────────────────────
+# Core (required for cofgen_tool.py — property prediction, PXRD, reverse eng.)
+numpy>=1.24
+scipy>=1.10
+scikit-learn>=1.2
+networkx>=3.0
+matplotlib>=3.7
+pandas>=2.0
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Optional — generative model training (GPU machine only)
+# Uncomment when ready to train:
+# torch>=2.0
+# torch-geometric>=2.3
+# pymatgen>=2023.1
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Optional — better SMARTS-based building block decomposition
+# rdkit-pypi>=2023.3
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Optional — MatterSim stability scoring
+# mattersim>=1.0
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Optional — pyCOFBuilder for CIF generation (production quality structures)
+# pyCOFBuilder>=0.0.14
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Development
+pytest>=7.0

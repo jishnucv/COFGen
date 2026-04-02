@@ -1,0 +1,32 @@
+model:
+  latent_dim:   256
+  hidden_dim:   512
+  n_layers:     8
+  n_heads:      8
+  token_size:   16      # latent tokenisation (LATENT_DIM / TOKEN_SIZE tokens)
+  time_dim:     128
+
+training:
+  epochs:       200
+  batch_size:   64
+  lr:           1.0e-4
+  weight_decay: 1.0e-5
+  grad_clip:    1.0
+  cfg_drop_prob: 0.10   # classifier-free guidance drop rate during training
+  n_workers:    4
+
+data:
+  processed_dir: data/processed/
+  split_file:    data/processed/splits.json
+  properties:
+    - bet_surface_area
+    - co2_uptake_298k_1bar
+    - void_fraction
+    - pore_limiting_diameter
+
+encoder_checkpoint: checkpoints/encoder/best.pt
+
+output:
+  checkpoint_dir: checkpoints/flowmatch_base/
+  log_every:      100
+  save_every:     20

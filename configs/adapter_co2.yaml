@@ -1,0 +1,29 @@
+adapter:
+  scalar_properties:
+    - co2_uptake_298k_1bar
+  linkage: true
+  topology: true
+  hidden_dim: 512
+  bottleneck: 64
+  dropout: 0.10
+
+training:
+  epochs:       50
+  batch_size:   32
+  lr:           5.0e-5
+  weight_decay: 1.0e-5
+  cfg_drop_prob: 0.15
+  freeze_base:  true      # only adapter parameters are trained
+
+data:
+  processed_dir: data/processed/
+  properties:
+    - co2_uptake_298k_1bar
+  min_property_val: 0.0   # filter structures without CO2 label
+
+base_checkpoint:    checkpoints/flowmatch_base/best.pt
+encoder_checkpoint: checkpoints/encoder/best.pt
+
+output:
+  checkpoint_dir: checkpoints/adapter_co2/
+  save_every:     10
