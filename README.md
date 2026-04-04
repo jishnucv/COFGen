@@ -146,7 +146,7 @@ python scripts/generate.py \
 @software{cofgen2026,
   title = {COFGen: Property Prediction and Generative Design for Covalent Organic Frameworks},
   year  = {2026},
-  url   = {https://github.com/your-username/cofgen}
+  url   = {https://github.com/jishnucv/cofgen}
 }
 ```
 
