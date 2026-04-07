@@ -1,1 +1,0 @@
-# COFGen package

@@ -1,52 +1,52 @@
 {
   "node_bb": "T3_BENZ",
-  "linker_bb": "L2_PYRN",
-  "linkage": "imine",
+  "linker_bb": "L2_PMDA",
+  "linkage": "imide",
   "topology": "hcb",
   "geometry": {
-    "void_fraction": 0.1274,
-    "pore_limiting_diameter": 4.05,
-    "largest_cavity_diameter": 11.196,
-    "density_g_cm3": 0.5643,
-    "bet_surface_area": 1082.7,
-    "cell_volume_A3": 2809.66
+    "void_fraction": 0.0808,
+    "pore_limiting_diameter": 3.939,
+    "largest_cavity_diameter": 8.973,
+    "density_g_cm3": 0.7845,
+    "bet_surface_area": 686.4,
+    "cell_volume_A3": 2020.92
   },
   "stacking": {
     "type": "AA",
-    "AA": 0.6666666666666666,
-    "AB": 0.19999999999999998,
-    "ABC": 0.13333333333333333,
-    "layer_spacing_A": 3.599999845027923
+    "AA": 0.526,
+    "AB": 0.373,
+    "ABC": 0.101,
+    "layer_spacing_A": 3.48
   },
   "electronics": {
-    "band_gap_eV": 1.6987399999999997,
-    "uncertainty_eV": 0.72,
-    "type": "near-infrared absorber"
+    "band_gap_eV": 2.34408,
+    "uncertainty_eV": 0.6,
+    "type": "visible-light photocatalyst"
   },
   "adsorption": {
     "CO2_1bar": {
-      "uptake_mmol_g": 0.914,
-      "co2_n2_selectivity": 35.0,
+      "uptake_mmol_g": 0.554,
+      "co2_n2_selectivity": 28.0,
       "gas": "CO2",
       "T_K": 298,
       "P_bar": 1.0
     },
     "CH4_65bar": {
-      "uptake_mmol_g": 2.123,
+      "uptake_mmol_g": 1.347,
       "co2_n2_selectivity": 1.0,
       "gas": "CH4",
       "T_K": 298,
       "P_bar": 65.0
     },
     "H2_100bar": {
-      "uptake_mmol_g": 3.898,
+      "uptake_mmol_g": 2.362,
       "co2_n2_selectivity": 1.0,
       "gas": "H2",
       "T_K": 77,
       "P_bar": 100.0
     },
     "N2_1bar": {
-      "uptake_mmol_g": 0.082,
+      "uptake_mmol_g": 0.06,
       "co2_n2_selectivity": 1.0,
       "gas": "N2",
       "T_K": 298,
@@ -54,148 +54,167 @@
     }
   },
   "mechanical": {
-    "young_modulus_inplane_GPa": 9.36,
-    "young_modulus_outplane_GPa": 6.45,
-    "shear_modulus_interlayer_GPa": 1.93,
-    "bulk_modulus_estimate_GPa": 5.27,
-    "uncertainty_GPa": 3.0
+    "young_modulus_inplane_GPa": 17.27,
+    "young_modulus_outplane_GPa": 6.29,
+    "shear_modulus_interlayer_GPa": 1.89,
+    "bulk_modulus_estimate_GPa": 7.85,
+    "uncertainty_GPa": 4.0
   },
   "stability": {
-    "thermal_decomp_T_C": 350,
-    "thermal_decomp_uncertainty_C": 50,
-    "water_stability": "moderate",
-    "acid_stability": "poor",
-    "base_stability": "good",
-    "hydrolysis_t12_hours": 48,
-    "stability_score": 0.5
+    "thermal_decomp_T_C": 500,
+    "thermal_decomp_uncertainty_C": 40,
+    "water_stability": "excellent",
+    "acid_stability": "good",
+    "base_stability": "moderate",
+    "hydrolysis_t12_hours": 5000,
+    "stability_score": 0.75
   },
   "pxrd_peaks": [
     {
       "hkl": "-100",
-      "d": 25.998081366231446,
-      "two_theta": 3.395742820396082,
+      "d": 22.04900578100532,
+      "two_theta": 4.004164377886722,
       "I": 99.99999999999999
     },
     {
       "hkl": "-210",
-      "d": 15.009999275207521,
-      "two_theta": 5.8833226872415345,
-      "I": 14.659450975076018
+      "d": 12.729999423027039,
+      "two_theta": 6.938243366787142,
+      "I": 21.444359643107184
     },
     {
-      "hkl": "-220",
-      "d": 12.999040683115725,
-      "two_theta": 6.7944721736603695,
-      "I": 24.00429813876091
+      "hkl": "-200",
+      "d": 11.02450289050266,
+      "two_theta": 8.013228347947653,
+      "I": 47.32267521138201
     },
     {
-      "hkl": "-310",
-      "d": 9.82635112283868,
-      "two_theta": 8.99220204732274,
-      "I": 8.153736579046429
+      "hkl": "-320",
+      "d": 8.333740850395083,
+      "two_theta": 10.607007742488651,
+      "I": 13.980119635935562
     },
     {
       "hkl": "-330",
-      "d": 8.66602712207715,
-      "two_theta": 10.199198315881604,
-      "I": 26.570759784739593
+      "d": 7.349668593668442,
+      "two_theta": 12.032145725277031,
+      "I": 37.852914651866335
     },
     {
-      "hkl": "-410",
-      "d": 7.210570417664028,
-      "two_theta": 12.265138196109461,
-      "I": 1.8143143163713173
+      "hkl": "-420",
+      "d": 6.364999711513519,
+      "two_theta": 13.902086926583385,
+      "I": 3.3106253693737533
     },
     {
-      "hkl": "-440",
-      "d": 6.499520341557862,
-      "two_theta": 13.612979475831075,
-      "I": 0.8743112120759926
+      "hkl": "-430",
+      "d": 6.115293916647432,
+      "two_theta": 14.472727912314495,
+      "I": 3.4089801116875025
+    },
+    {
+      "hkl": "-400",
+      "d": 5.51225144525133,
+      "two_theta": 16.065980450087057,
+      "I": 0.9064518986202226
     },
     {
       "hkl": "-520",
-      "d": 5.964368915860565,
-      "two_theta": 14.840987674347183,
-      "I": 1.2125785542357763
+      "d": 5.058388842365595,
+      "two_theta": 17.518354081789262,
+      "I": 3.689961012636171
     },
     {
-      "hkl": "-510",
-      "d": 5.673246465922693,
-      "two_theta": 15.607178537754836,
-      "I": 4.103905703784409
-    },
-    {
-      "hkl": "-5-20",
-      "d": 4.163024771649078,
-      "two_theta": 21.326197827621666,
-      "I": 0.8992232310904682
+      "hkl": "-540",
+      "d": 4.811487523332182,
+      "two_theta": 18.42493914793764,
+      "I": 2.73127624990448
     },
     {
       "hkl": "001",
       "d": 3.599999845027923,
       "two_theta": 24.710474750700136,
-      "I": 1.1328365952219805
+      "I": 2.485905266671166
     },
     {
       "hkl": "-101",
-      "d": 3.5659744191634535,
-      "two_theta": 24.950033387927544,
-      "I": 1.8512366518055694
+      "d": 3.5529540621817968,
+      "two_theta": 25.042947814742814,
+      "I": 2.5539278641573704
     },
     {
       "hkl": "-211",
-      "d": 3.5007211171131565,
-      "two_theta": 25.42280926864878,
-      "I": 0.7790804920179122
+      "d": 3.464143348026818,
+      "two_theta": 25.695814098043737,
+      "I": 1.5649380527870074
     },
     {
       "hkl": "-201",
-      "d": 3.4694097031736777,
-      "two_theta": 25.656143786401906,
-      "I": 1.672475600922995
+      "d": 3.4221646422914778,
+      "two_theta": 26.016511565838744,
+      "I": 4.471641744198509
     },
     {
       "hkl": "-311",
-      "d": 3.380287534292243,
-      "two_theta": 26.34458375938399,
-      "I": 0.9417427601981723
+      "d": 3.304831039842256,
+      "two_theta": 26.95730054173212,
+      "I": 2.1955457337029447
     },
     {
       "hkl": "-301",
-      "d": 3.3245519512551454,
-      "two_theta": 26.794403591475625,
-      "I": 3.870014637059198
+      "d": 3.2329974299605713,
+      "two_theta": 27.56795391734407,
+      "I": 7.355239935842618
+    },
+    {
+      "hkl": "-421",
+      "d": 3.133521660459596,
+      "two_theta": 28.461264672123995,
+      "I": 0.8200404337987508
+    },
+    {
+      "hkl": "-411",
+      "d": 3.102349161478219,
+      "two_theta": 28.75336841932187,
+      "I": 0.937673616463029
+    },
+    {
+      "hkl": "-521",
+      "d": 2.933038274875715,
+      "two_theta": 30.45219332124192,
+      "I": 1.3375848180153027
     },
     {
       "hkl": "-511",
-      "d": 3.039665683920168,
-      "two_theta": 29.359495091238863,
-      "I": 1.246315355912453
+      "d": 2.8824755346716096,
+      "two_theta": 30.999666619762237,
+      "I": 1.0273535946712722
     }
   ],
   "synthesis": {
-    "score": 1.0,
+    "score": 0.9,
     "prior": {
       "solvent": [
         "o-DCB/n-BuOH (1:1, v/v)",
-        "mesitylene/1,4-dioxane (1:1, v/v)",
-        "mesitylene (neat)"
+        "DMF (neat)",
+        "NMP (N-methyl-2-pyrrolidone)",
+        "DMAc/isoquinoline (9:1, v/v)",
+        "DMF/isoquinoline (9:1, v/v)"
       ],
       "catalyst": [
         "6M AcOH (aq), 0.1 mL",
-        "1M TFA, 0.2 mL",
-        "3M AcOH (aq), 0.1 mL",
-        "no catalyst"
+        "no catalyst",
+        "isoquinoline (1-2 drops, base catalyst)",
+        "acetic acid (glacial, 1 drop)"
       ],
       "temp_C": [
-        100.0,
-        130.0
+        120.0,
+        220.0
       ],
       "time_days": [
-        2.0,
-        5.0
+        3.0,
+        72.0
       ]
     }
-  },
-  "pxrd_profile": "... (660 points, see full JSON output)"
+  }
 }

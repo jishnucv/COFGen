@@ -151,8 +151,10 @@ def cmd_predict(args):
     )
 
     # ── Stacking ──────────────────────────────────────────────────────────
-    stk  = analyse_stacking(frac, a, b, c, alpha, cell.get("beta", 90.0), gamma)
-    pref = predict_preferred_stacking(a, b, n_arom, linkage)
+    stk  = analyse_stacking(frac, a, b, c, alpha, cell.get("beta", 90.0), gamma,
+                             node_bb=node_bb)
+    pref = predict_preferred_stacking(a, b, n_arom, linkage,
+                                       node_bb=node_bb, linker_bb=linker_bb)
     best_stacking = max(pref, key=pref.get)
 
     # ── Electronic ────────────────────────────────────────────────────────
@@ -178,7 +180,19 @@ def cmd_predict(args):
                                            geo["void_fraction"])
 
     # ── Stability ─────────────────────────────────────────────────────────
-    stab = predict_stability(linkage)
+    stab = predict_stability(linkage, node_bb=node_bb, linker_bb=linker_bb)
+
+    # Imide layer spacing correction: PI-COFs pack tighter due to planar rings
+    if linkage == "imide":
+        stk = stk.__class__(
+            stacking_type  = stk.stacking_type,
+            layer_spacing  = 3.48,    # literature: Ben JACS 2009 d=3.45Å, Fang 2015 d=3.50Å
+            offset_x       = stk.offset_x,
+            offset_y       = stk.offset_y,
+            offset_frac    = stk.offset_frac,
+            tilt_angle     = stk.tilt_angle,
+            pi_stack_energy_estimate = stk.pi_stack_energy_estimate,
+        )
 
     # ── Synthesis ─────────────────────────────────────────────────────────
     from decoder.reticular_decoder import COFSpec, BB_LIBRARY
@@ -724,6 +738,107 @@ def cmd_list_bbs(args):
 
 
 # ════════════════════════════════════════════════════════════════════════════
+# COMMAND: from-monomers
+# ════════════════════════════════════════════════════════════════════════════
+
+def cmd_from_monomers(args):
+    """Predict COF from two monomer CIF files."""
+    from analysis.monomer_cif_to_cof import predict_cof_from_monomers
+
+    _print_header("COF Prediction from Monomer CIFs")
+
+    node_path   = Path(args.node_cif)
+    linker_path = Path(args.linker_cif)
+
+    for p in (node_path, linker_path):
+        if not p.exists():
+            print(f"\n  ✗ File not found: {p}")
+            return
+
+    topology = getattr(args, "topology", "") or ""
+    stacking = getattr(args, "stacking", "") or ""
+
+    print(f"\n  Node CIF:   {node_path.name}")
+    print(f"  Linker CIF: {linker_path.name}")
+    if topology:
+        print(f"  Topology:   {topology} (user-specified)")
+    if stacking:
+        print(f"  Stacking:   {stacking} (user-specified)")
+
+    result = predict_cof_from_monomers(
+        node_cif   = node_path,
+        linker_cif = linker_path,
+        topology   = topology,
+        stacking   = stacking,
+        verbose    = True,
+    )
+
+    print(result.summary)
+
+    if args.json:
+        _write_json({
+            "node": {
+                "cif":       result.node.cif_name,
+                "formula":   result.node.formula,
+                "fg":        result.node.primary_fg,
+                "n_sites":   result.node.n_reactive,
+                "connectivity": result.node.connectivity,
+                "arm_length_A": result.node.arm_length,
+                "matched_bb":   result.node.matched_bb,
+                "match_conf":   result.node.match_conf,
+            },
+            "linker": {
+                "cif":       result.linker.cif_name,
+                "formula":   result.linker.formula,
+                "fg":        result.linker.primary_fg,
+                "n_sites":   result.linker.n_reactive,
+                "connectivity": result.linker.connectivity,
+                "arm_length_A": result.linker.arm_length,
+                "matched_bb":   result.linker.matched_bb,
+                "match_conf":   result.linker.match_conf,
+            },
+            "linkage":  result.linkage,
+            "topology": result.topology,
+            "stacking": result.stacking,
+            "stacking_prefs": result.stacking_prefs,
+            "geometry": {
+                "cell_a_A":       result.a_angstrom,
+                "cell_c_A":       result.c_angstrom,
+                "layer_spacing_A": result.layer_spacing,
+                "void_fraction":  result.void_fraction,
+                "bet_m2g":        result.bet_m2g,
+                "pld_A":          result.pld,
+                "lcd_A":          result.lcd,
+                "density_gcm3":   result.density,
+            },
+            "electronics": {
+                "band_gap_eV": result.band_gap,
+            },
+            "adsorption": {
+                "CO2_298K_1bar_mmolg":  result.co2_uptake,
+                "CH4_298K_65bar_mmolg": result.ch4_uptake,
+                "H2_77K_100bar_mmolg":  result.h2_uptake,
+                "CO2_N2_selectivity":   result.co2_n2_sel,
+            },
+            "mechanical": {
+                "E_inplane_GPa": result.e_inplane,
+            },
+            "stability": {
+                "thermal_decomp_C": result.thermal_C,
+                "water_stability":  result.water_stab,
+            },
+            "pxrd_peaks": result.pxrd_peaks,
+            "synthesis": {
+                "score":     result.synth_score,
+                "solvent":   result.synth_solvent,
+                "catalyst":  result.synth_catalyst,
+                "temp":      result.synth_temp,
+            },
+            "warnings": result.warnings,
+        }, args.json)
+
+
+# ════════════════════════════════════════════════════════════════════════════
 # ARGUMENT PARSER
 # ════════════════════════════════════════════════════════════════════════════
 
@@ -736,6 +851,8 @@ def build_parser() -> argparse.ArgumentParser:
 Examples:
   python cofgen_tool.py predict  --cif my_cof.cif
   python cofgen_tool.py predict  --node T3_BENZ --linker L2_PYRN --linkage imine
+  python cofgen_tool.py from-monomers --node-cif TAPB.cif --linker-cif PDA.cif
+  python cofgen_tool.py from-monomers --node-cif porphyrin.cif --linker-cif PMDA.cif --topology sql
   python cofgen_tool.py reverse  --cif unknown.cif
   python cofgen_tool.py pxrd     --cif my_cof.cif --plot
   python cofgen_tool.py stacking --cif my_cof.cif
@@ -794,6 +911,19 @@ Examples:
     gp.add_argument("--bet",    type=float, help="Min BET surface area (m²/g)")
     gp.add_argument("--json",   help="Write JSON output to file")
 
+    # -- from-monomers --
+    fm = sp.add_parser("from-monomers",
+                        help="Predict COF from two monomer CIF files")
+    fm.add_argument("--node-cif",    required=True,
+                    help="CIF file of the node building block (amine/boronic acid)")
+    fm.add_argument("--linker-cif",  required=True,
+                    help="CIF file of the linker building block (aldehyde/dianhydride/diol)")
+    fm.add_argument("--topology",    default="",
+                    help="Override topology (hcb/sql/kgm) — auto-detected if omitted")
+    fm.add_argument("--stacking",    default="",
+                    help="Override stacking (AA/AB/ABC) — predicted if omitted")
+    fm.add_argument("--json",        help="Write JSON output to file")
+
     # -- list-bbs --
     sp.add_parser("list-bbs", help="List all building blocks")
 
@@ -805,13 +935,14 @@ def main():
     args   = parser.parse_args()
 
     dispatch = {
-        "predict":  cmd_predict,
-        "reverse":  cmd_reverse,
-        "pxrd":     cmd_pxrd,
-        "stacking": cmd_stacking,
-        "synthesis":cmd_synthesis,
-        "generate": cmd_generate,
-        "list-bbs": cmd_list_bbs,
+        "predict":       cmd_predict,
+        "reverse":       cmd_reverse,
+        "pxrd":          cmd_pxrd,
+        "stacking":      cmd_stacking,
+        "synthesis":     cmd_synthesis,
+        "generate":      cmd_generate,
+        "from-monomers": cmd_from_monomers,
+        "list-bbs":      cmd_list_bbs,
     }
     dispatch[args.command](args)
 
